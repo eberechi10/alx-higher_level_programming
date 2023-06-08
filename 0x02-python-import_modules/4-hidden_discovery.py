@@ -1,8 +1,10 @@
 #!/usr/bin/python3
 
-     import hidden_4
 if __name__ == "__main__":
+    from hidden_4 import *
 
-    for i in dir(hidden_4):
-        if i[:2] != "__":
-            print("{:i}".format(i))
+    lists = dir()
+    for i in range(len(lists)):
+        if lists[i][:2] != '__':
+
+            print("{}".format(lists[i]))
