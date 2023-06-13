@@ -1,24 +1,30 @@
-#include <Python.h>
-#include <stdio.h>
+#include "lists.h"
+#include "/usr/include/python3.4/Python.h"
+#include "/usr/include/python3.4/object.h"
+#include "/usr/include/python3.4/listobject.h"
+
+/**
+ * print_python_list_info - prints info to the lists
+ * @p: Pointer to object.
+ *
+ * Return: Nothing.
+ */
 
 void print_python_list_info(PyObject *p)
 {
-	PyListObject *list;
-	Py_ssize_t size, x;
-	PyObject *object;
-	struct _typeobject *type;
+	Py_ssize_t size = PyList_Size(p);
+	Py_ssize_t allocated = ((PyListObject *)p)->allocated;
+	Py_ssize_t x;
+	PyObject *i_Obj;
+	const char *i_Type;
 
-	if (strcmp(p->obj_type->tp_name, "list") == 0)
+	printf("[*] Size of the Python List = %ld\n", size);
+	printf("[*] Allocated = %ld\n", allocated);
+
+	for (x = 0; x < size; x++)
 	{
-		list = (PyListObject *)p;
-		size = list->obj_base.obj_size;
-		printf("[*] Size of the Python List = %ld\n", size);
-		printf("[*] Allocated = %ld\n", list->allocated);
-		for (x = 0; x < size; x++)
-		{
-			object = list->obj_item[x];
-			type = object->obj_type;
-			printf("Element %ld: %s\n", x, type->tp_name);
-		}
+		i_Obj = PyList_GetItem(p, x);
+		i_Type = Py_TYPE(i_Obj)->tp_name;
+		printf("Element %ld: %s\n", x, i_Type);
 	}
 }
