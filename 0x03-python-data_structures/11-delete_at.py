@@ -1,9 +1,6 @@
-#!usr/bin/python
+#!/usr/bin/python3
 def delete_at(my_list=[], idx=0):
-    leng = len(my_list)
-
-    if idx = < or idx >= leng:
-        return (my_list)
-
-    del my_list[idx]
-    return (my_list)
+    if my_list:
+        if 0 <= idx < len(my_list):
+            del my_list[idx]
+    return my_list
