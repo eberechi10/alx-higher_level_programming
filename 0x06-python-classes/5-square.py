@@ -1,46 +1,53 @@
 #!/usr/bin/python3
+"""a module that defines class of square """
 
 
 class Square:
-    """ a Square class that is defined by its size."""
+    """class to defines a square class"""
 
     def __init__(self, size=0):
-        """ a function method which initializes square object."""
+        """ a method that Initialize square class
+        Args:
+            size: defines size of the square
+        Raises:
+            TypeError: if size is not integer
+            ValueError: if size is less than 0
+        """
 
         if not isinstance(size, int):
-            raise TypeError("size must be an integer")
-        elif size < 0:
-            raise ValueError("size must be >= 0")
-        else:
-            self.__size = size
+            raise TypeError('size must be an integer')
+        if size < 0:
+            raise ValueError('size must be >= 0')
 
-    def area(self):
-        """ function to return the objects of the square"""
-        return (self.__size ** 2)
+        self.__size = size
 
     @property
     def size(self):
-        """ the method that return the value of the size."""
+        """a method that gets the squre size"""
+
         return self.__size
 
     @size.setter
     def size(self, value):
-        """ a setter to set the value of the size of square object."""
-
         if not isinstance(value, int):
-            raise TypeError("size must be an integer")
-        elif value < 0:
-            raise ValueError("size must be >= 0")
-        else:
-            self.__size = value
+            raise TypeError('size must be an integer')
+        if value < 0:
+            raise ValueError('size must be >= 0')
+        self.__size = value
+
+    def area(self):
+        """
+        this is a method to compute area of square
+        Returns: size of square
+        """
+
+        return (self.__size ** 2)
 
     def my_print(self):
-        """ a function to print square based on value of the size"""
-        if not self.__size:
-            print()
-        else:
+        """this method prints # shape in the form of square """
 
-            for x in range(self.__size):
-                for y in range(self.__size):
-                    print("#", end='')
-                print()
+        if self.__size == 0:
+            print()
+
+        for x in range(self.__size):
+            print("#" * self.__size)
