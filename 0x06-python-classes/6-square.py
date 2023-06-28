@@ -15,7 +15,7 @@ class Square:
         self.size = size
         self.position = position
 
-    def __strs__(self):
+    def __str__(self):
         self.my_print()
 
     @property
@@ -81,4 +81,4 @@ class Square:
 
     def my_print(self):
         """a method to print position in square"""
-        print(self.pos_print(), end='')
+        print(self.posi_print(), end='')
