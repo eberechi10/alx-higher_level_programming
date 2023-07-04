@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!usr/bin/python3
 
 """
     the class that defines the Rectangle class.
@@ -82,4 +82,4 @@ class Rectangle:
             return ("")
         return "\n".join(('#' * self.width) for _ in range(self.height))
 
-	""" it returns the drawing of the rectangle using #"""
+    """ it returns the drawing of the rectangle using #"""
