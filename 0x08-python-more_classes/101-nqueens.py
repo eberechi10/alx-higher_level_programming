@@ -1,51 +1,119 @@
 #!/usr/bin/python3
 
-""" solves the N queens problem."""
+"""a program to resolve the N-Queen puzzle"""
+
 import sys
 
-if len(sys.argv) != 2:
-    print("Usage: nqueens N")
-    sys.exit(1)
 
-try:
-    SIZE = int(sys.argv[1])
-except ValueError:
-    print("N must be a number")
-    sys.exit(1)
+def init_board(n):
 
-if SIZE < 4:
-    print("N must be at least 4")
-    sys.exit(1)
+    """Initialize sized chessboard"""
+    node = []
+    [node.append([]) for e in range(n)]
+    [row.append(' ') for e in range(n) for row in node]
+    return (node)
 
 
-def solve_n_queens(N: int):
-    """sum possible solutions for problem of a given N.
+def node_copy(node):
 
+    """copy of a chessboard."""
+    if isinstance(node, list):
+        return list(map(node_copy, node))
+    return (node)
+
+
+def get_solved(node):
+
+    """representation of a solved chessboard."""
+    solved = []
+    for p in range(len(node)):
+        for c in range(len(node)):
+            if node[p][c] == "Q":
+                solved.append([p, c])
+                break
+    return (solved)
+
+
+def xout(node, row, col):
+
+    """spots on a chessboard.
+    spots where non-attacking queens can't
+    be played out.
     Args:
-        N (int): Dimenstion of chessboard / number of queens.
+        node: working chessboard.
+        row: row last played.
+        col: column last played.
     """
-    def is_safe(board, row, col):
-        # Check if is safe to place a queen at a given position
-        for e in range(row):
-            if board[e] == col or \
-                    board[e] - e == col - row or \
-                    board[e] + e == col + row:
-                return False
-        return True
 
-    def solve(board, row):
-        if row == N:
-            # All queens have been placed, print the solution
-            print([[e, board[e]] for e in range(N)])
-        else:
-            for col in range(N):
-                if is_safe(board, row, col):
-                    board[row] = col
-                    solve(board, row + 1)
+    for c in range(col + 1, len(node)):
+        node[row][c] = "x"
+    for c in range(col - 1, -1, -1):
+        node[row][c] = "x"
+    for p in range(row + 1, len(node)):
+        node[p][col] = "x"
+    for p in range(row - 1, -1, -1):
+        node[p][col] = "x"
+    c = col + 1
+    for p in range(row + 1, len(node)):
+        if c >= len(node):
+            break
+        node[p][c] = "x"
+        c += 1
+    c = col - 1
+    for p in range(row - 1, -1, -1):
+        if c < 0:
+            break
+        board[p][c]
+        c -= 1
+    c = col + 1
+    for p in range(row - 1, -1, -1):
+        if c >= len(node):
+            break
+        node[p][c] = "x"
+        c += 1
+    c = col - 1
+    for p in range(row + 1, len(node)):
+        if c < 0:
+            break
+        node[p][c] = "x"
+        c -= 1
 
-    board = [-1] * N
-    solve(board, 0)
+
+def recur_solved(node, row, queens, solved):
+
+    """solve N-queens puzzle.
+    Args:
+        node: working chessboard.
+        row: current row.
+        queens: current placed queens.
+        solved: lists of solve.
+    """
+    if queens == len(node):
+        solved.append(get_solved(node))
+        return (solved)
+
+    for c in range(len(node)):
+        if node[row][c] == " ":
+            elm_node = node_copy(node)
+            elm_node[row][c] = "Q"
+            xout(elm_node, row, c)
+            solved = recur_solved(elm_node, row + 1, queens + 1, solved)
+
+    return (solved)
 
 
 if __name__ == "__main__":
-    solve_n_queens(SIZE)
+    if len(sys.argv) != 2:
+        print("Usage: nqueens N")
+        sys.exit(1)
+    if sys.argv[1].isdigit() is False:
+        print("N must be a number")
+        sys.exit(1)
+    if int(sys.argv[1]) < 4:
+        print("N must be at least 4")
+        sys.exit(1)
+
+    node = init_node(int(sys.argv[1]))
+    solved = recur_solved(node, 0, 0, [])
+    for pt in solved:
+        print(pt)
