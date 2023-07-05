@@ -1,119 +1,107 @@
 #!/usr/bin/python3
 
-"""a program to resolve the N-Queen puzzle"""
-
-import sys
+"""module that resolves the N-Queen puzzle"""
 
 
-def init_board(n):
+def isSafe(board, nqueen):
 
-    """Initialize sized chessboard"""
-    node = []
-    [node.append([]) for e in range(n)]
-    [row.append(' ') for e in range(n) for row in node]
-    return (node)
+    """determines if the queens can or can't kill each other
 
-
-def node_copy(node):
-
-    """copy of a chessboard."""
-    if isinstance(node, list):
-        return list(map(node_copy, node))
-    return (node)
-
-
-def get_solved(node):
-
-    """representation of a solved chessboard."""
-    solved = []
-    for p in range(len(node)):
-        for c in range(len(node)):
-            if node[p][c] == "Q":
-                solved.append([p, c])
-                break
-    return (solved)
-
-
-def xout(node, row, col):
-
-    """spots on a chessboard.
-    spots where non-attacking queens can't
-    be played out.
     Args:
-        node: working chessboard.
-        row: row last played.
-        col: column last played.
+        board: queens positions
+        nqueen: queen number
+
+    Returns:
+        True: can't kill each other
+        False: queens can kill
+
     """
 
-    for c in range(col + 1, len(node)):
-        node[row][c] = "x"
-    for c in range(col - 1, -1, -1):
-        node[row][c] = "x"
-    for p in range(row + 1, len(node)):
-        node[p][col] = "x"
-    for p in range(row - 1, -1, -1):
-        node[p][col] = "x"
-    c = col + 1
-    for p in range(row + 1, len(node)):
-        if c >= len(node):
-            break
-        node[p][c] = "x"
-        c += 1
-    c = col - 1
-    for p in range(row - 1, -1, -1):
-        if c < 0:
-            break
-        board[p][c]
-        c -= 1
-    c = col + 1
-    for p in range(row - 1, -1, -1):
-        if c >= len(node):
-            break
-        node[p][c] = "x"
-        c += 1
-    c = col - 1
-    for p in range(row + 1, len(node)):
-        if c < 0:
-            break
-        node[p][c] = "x"
-        c -= 1
+    for e in range(nqueen):
+
+        if board[e] == board[nqueen]:
+            return False
+
+        if abs(board[e] - board[nqueen]) == abs(e - nqueen):
+            return False
+
+    return True
 
 
-def recur_solved(node, row, queens, solved):
+def solution(m_queen, nqueen):
 
-    """solve N-queens puzzle.
+    """ list with the Queens positions
+
     Args:
-        node: working chessboard.
-        row: current row.
-        queens: current placed queens.
-        solved: lists of solve.
+        board: queens positions
+        nqueen: queen number
+
     """
-    if queens == len(node):
-        solved.append(get_solved(node))
-        return (solved)
 
-    for c in range(len(node)):
-        if node[row][c] == " ":
-            elm_node = node_copy(node)
-            elm_node[row][c] = "Q"
-            xout(elm_node, row, c)
-            solved = recur_solved(elm_node, row + 1, queens + 1, solved)
+    sol = []
 
-    return (solved)
+    for e in range(nqueen):
+        sol.append([e, board[e]])
+
+    print(sol)
 
 
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
+def recursive_sol(board, nqueen):
+
+    """ a recursive that executes the Backtracking
+
+    Args:
+        board: queens positions
+        nqueen: queen number
+
+    """
+
+    if nqueen is len(board):
+        solution(board, nqueen)
+        return
+
+    board[nqueen] = -1
+
+    while((board[nqueen] < len(board) - 1)):
+
+        board[nqueen] += 1
+
+        if isSafe(board, nqueen) is True:
+
+            if nqueen is not len(board):
+                recursive_sol(board, nqueen + 1)
+
+
+def sol_NQueen(size):
+
+    """ initialized the Backtracking
+
+    Args:
+        size: chessboard size
+
+    """
+
+    board = [-1 for e in range(size)]
+
+    recursive_sol(board, 0)
+
+
+if __name__ == '__main__':
+
+    import sys
+
+    if len(sys.argv) == 1 or len(sys.argv) > 2:
         print("Usage: nqueens N")
         sys.exit(1)
-    if sys.argv[1].isdigit() is False:
+
+    try:
+        size = int(sys.argv[1])
+    except ValueError:  # Catch the specific ValueError if conversion fails
         print("N must be a number")
         sys.exit(1)
-    if int(sys.argv[1]) < 4:
+
+    if size < 4:
         print("N must be at least 4")
         sys.exit(1)
 
-    node = init_node(int(sys.argv[1]))
-    solved = recur_solved(node, 0, 0, [])
-    for pt in solved:
-        print(pt)
+    sol_NQueen(size)
