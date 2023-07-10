@@ -3,7 +3,7 @@
 """ a module to define adds attributes to objects"""
 
 
-def add_attribute(obj, att, value):
+def add_attribute(obj, name, value):
 
     """ a method that adds new attribute to an object.
 
