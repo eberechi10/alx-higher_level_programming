@@ -105,7 +105,7 @@ Add tuple
     TypeError: a must be an integer
 
 Add number and list
-    >>> add_integer(012, [])
+    >>> add_integer(123, [])
     Traceback (most recent call last):
 	      ...
     TypeError: b must be an integer
