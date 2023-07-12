@@ -1,0 +1,65 @@
+import doctest
+import base_geometry
+
+Import the module and classes
+BaseGeometry = __import__("7-base_geometry").BaseGeometry
+
+Check method docstrings
+mod1 = BaseGeometry.area.__doc__
+print(len(mod1) > 1)
+
+mod2 = BaseGeometry.integer_validator.__doc__
+print(len(mod2) > 1)
+
+Check module docstring
+x = base_geometry.__doc__
+print(len(x) > 1)
+
+Check class docstring
+y = BaseGeometry.__doc__
+print(len(y) > 1)
+
+Create an instance of BaseGeometry
+bg = BaseGeometry()
+
+Check too many arguments for area
+try:
+    bg.area(1)
+except TypeError as e:
+    print(f"TypeError: {e}")
+
+Integer validation tests
+bg.integer_validator("integer", 1)
+bg.integer_validator("integer", 0)  """raise ValueError"""
+bg.integer_validator("integer", -5)  """raise ValueError"""
+
+Check for area failure
+try:
+    bg.area()
+except Exception as e:
+    print(f"Exception: {e}")
+
+Non-integer type validation tests
+data = [
+    ("bool", True),
+    ("float", 1.5),
+    ("complex", complex(1, 1)),
+    ("string", "school"),
+    ("tuple", (1, 2)),
+    ("list", [1, 2, 3]),
+    ("dict", {"key": "value"}),
+    ("set", {"school", "world"}),
+    ("frozenset", frozenset(["school", "world"])),
+    ("bytes", b"bytes"),
+    ("bytearrays", bytearray(b"bytes")),
+]
+
+for datatype, value in data:
+    try:
+        bg.integer_validator(datatype, value)
+    except TypeError as e:
+        print(f"TypeError: {e}")
+
+Run the doctests
+doctest.testmod(base_geometry)
+
