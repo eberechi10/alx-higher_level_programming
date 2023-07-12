@@ -12,15 +12,15 @@ s_code = {"200": 0, "301": 0, "400": 0, "401": 0,
 x = 0
 try:
     for line in sys.stdin:
-        nod = line.split()
+    tokens = line.split()
 
-        if len(nod) >= 2:
+        if len(tokens) >= 2:
             a = x
-            if nod[-2] in s_code:
-                s_code[nod[-2]] += 1
+            if tokens[-2] in s_code:
+                s_code[tokens[-2]] += 1
                 x += 1
             try:
-                f_size += int(nod[-1])
+                f_size += int(tokens[-1])
                 if a == x:
                     x += 1
             except FileNotFoundError:

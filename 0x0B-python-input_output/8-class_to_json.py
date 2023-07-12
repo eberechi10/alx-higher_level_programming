@@ -12,7 +12,7 @@ def class_to_json(obj):
 
     Args:
          obj: class instance
-         
+
     Return: dict: dictionary
     """
 
