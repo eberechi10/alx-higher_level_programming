@@ -1,45 +1,79 @@
-The ``1-my_list`` module
-========================
+MYList
 
+Importing the MyList class
+>>> MyList = __import__("1-my_list").MyList
 
-importing the method from the module
-    >>> MyList = __import__('1-my_list').MyList
+Check class docstring
+>>> y = MyList.__doc__
+>>> len(y) > 1
+True
 
+Check method docstring
+>>> idx = MyList.print_sorted.__doc__
+>>> len(idx) > 1
+True
 
-Creating instance
+Check inheritance from list
+>>> issubclass(MyList, list)
+True
 
-    >>> my_list = MyList()
+Check module docstring
+>>> mod = __import__("1-my_list").__doc__
+>>> len(mod) > 1
+True
 
-Printing an empty list
+Test an empty list
+>>> l = MyList()
+>>> l.print_sorted()
+[]
 
-    >>> print(my_list)
-    []
+Test a list with all negative numbers
+>>> l = MyList()
+>>> l.append(-10)
+>>> l.append(-1)
+>>> l.append(-7)
+>>> l.append(-2)
+>>> l.append(-8)
+>>> print(l)
+[-10, -1, -7, -2, -8]
+>>> l.print_sorted()
+[-10, -8, -7, -2, -1]
+>>> print(l)
+[-10, -1, -7, -2, -8]
 
-    >>> my_list.print_sorted()
-    []
+Test appending positive numbers
+>>> l = MyList()
+>>> l.append(1)
+>>> l.append(2)
+>>> l.append(3)
+>>> l.append(4)
+>>> print(l)
+[1, 2, 3, 4]
 
-Appending arguments
-    >>> my_list.append(1)
-    >>> my_list.append(4)
-    >>> my_list.append(2)
-    >>> my_list.append(3)
-    >>> my_list.append(5)
+Test printing a list already in sorted order
+>>> l.print_sorted()
+[1, 2, 3, 4]
 
-Printing direct the list instance.
-    >>> print(my_list)
-    [1, 4, 2, 3, 5]
+Test printing a list in reverse order
+>>> l = MyList()
+>>> l.append(4)
+>>> l.append(3)
+>>> l.append(2)
+>>> l.append(1)
+>>> print(l)
+[4, 3, 2, 1]
+>>> l.print_sorted()
+[1, 2, 3, 4]
+>>> print(l)
+[4, 3, 2, 1]
 
-calling `print_sorted()` function
-    >>> my_list.print_sorted()
-    [1, 2, 3, 4, 5]
+Test a list with one negative number
+>>> l.append(-1)
+>>> l.append(5)
+>>> print(l)
+[4, 3, 2, 1, -1, 5]
+>>> l.print_sorted()
+[-1, 1, 2, 3, 4, 5]
+>>> print(l)
+[4, 3, 2, 1, -1, 5]
 
-Appending negative numbers
-    >>> my_list.append(-1)
-    >>> my_list.append(-3)
-    >>> my_list.append(-7)
-
-    >>> print(my_list)
-    [1, 4, 2, 3, 5, -1, -3, -7]
-
-    >>> my_list.print_sorted()
-    [-7, -3, -1, 1, 2, 3, 4, 5]
