@@ -1,6 +1,6 @@
 #!/usr/bin/node
 
-const { dict } = require('./101-data.js').dict;
+const { dict } = require('./101-data');
 
 const ids = Object.values(dict);
 const occurences = Object.keys(dict);
