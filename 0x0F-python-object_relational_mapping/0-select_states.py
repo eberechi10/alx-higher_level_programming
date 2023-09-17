@@ -1,29 +1,33 @@
 #!/usr/bin/python3
 
 """
-module to list all states from the
-database "hbtn_0e_0_usa".
+  a module to List all states from the database hbtn_0e_0_usa
 """
 
+import sys
 import MySQLdb
-from sys import argv
 
 if __name__ == "__main__":
+    """ initialize list of states
+
     """
-    connect to the database
-    """
-    db_con = MySQLdb.connect(
-        host = "localhost", 
-        username=argv[1],
-        port = 3306,
-        password = argv[2],
-        db_name = argv[3])
+    username: str = sys.argv[1]
+    password: str = sys.argv[2]
+    db_name: str = sys.argv[3]
+    host: str = "localhost"
+    port: int = 3306
+    statement: str = """SELECT * FROM states ORDER BY id"""
 
-    db_cursor = db_con.cursor()
+    db = MySQLdb.connect(
+        user=username,
+        host=host,
+        port=port,
+        password=password,
+        database=db_name,
+    )
+    cursor = db.cursor()
 
-    db_cursor.execute("SELECT * FROM states")
-
-    rows_sel = db_cursor.fetchall()
-
-    for row in rows_sel:
+    cursor.execute(statement)
+    rows = cursor.fetchall()
+    for row in rows:
         print(row)
