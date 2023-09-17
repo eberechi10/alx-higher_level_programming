@@ -12,7 +12,7 @@ from model_state import Base, State
 
 if __name__ == "__main__":
     """
-    A module to initialize 
+    A module to initialize
 
     """
     username: str = sys.argv[1]

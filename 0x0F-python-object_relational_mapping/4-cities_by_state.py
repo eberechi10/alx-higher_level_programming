@@ -1,26 +1,40 @@
 #!/usr/bin/python3
-"""
-Module to list all cities.
-from the database `hbtn_0e_0_usa`.
-"""
 
+"""
+A module to Lists all cities and their states
+from the database hbtn_0e_4_usa
+"""
+import sys
 import MySQLdb
-from sys import argv
 
-"""
-initialize database, get the states
-"""
-if __name__ == '__main__':
-    db_con = db.connect(host="localhost", port=3306,
-                            username=argv[1], password=argv[2], db=argv[3])
-    db_cursor = db_con.cursor()
+if __name__ == "__main__":
+    """ A module to initialize class
 
-    db_cursor.execute(
-        "SELECT cities.id, cities.name, states.name \
-                                FROM cities JOIN states ON cities.state_id \
-                                = states.id ORDER BY cities.id ASC")
+    """
+    username: str = sys.argv[1]
+    password: str = sys.argv[2]
+    db_name: str = sys.argv[3]
+    host: str = "localhost"
+    port: int = 3306
 
-    rows_sel = db_cursor.fetchall()
+    command: str = """
+    SELECT c.id, c.name, s.name
+    FROM cities AS c
+    JOIN states AS s
+    ON c.state_id = s.id
+    ORDER BY c.id;
+    """
 
-    for row in rows_sel:
+    db = MySQLdb.connect(
+        user=username,
+        host=host,
+        port=port,
+        password=password,
+        database=db_name,
+    )
+    cursor = db.cursor()
+
+    cursor.execute(command)
+    rows = cursor.fetchall()
+    for row in rows:
         print(row)

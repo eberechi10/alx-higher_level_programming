@@ -12,7 +12,7 @@ from sqlalchemy.orm import sessionmaker
 from model_state import Base, State
 
 if __name__ == "__main__":
-    """ 
+    """
     initializes the module
 
     """

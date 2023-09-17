@@ -1,19 +1,28 @@
 #!/usr/bin/python3
 
 """
-A module to define a City class.
+a module that define City class representing table `cities`
+in the database.
 """
-from model_state import Base, State
 from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
+from model_state import Base
 
 
 class City(Base):
-    """City class
 
+    """
+     a module to initialize Cities.
+
+    Attributes:
+        id (int): primary key.
+        name (str): city.
     """
 
     __tablename__ = 'cities'
 
-    id = Column(Integer, primary_key=True)
-    state_id = Column(Integer, ForeignKey('states.id'), nullable=False)
-    name = Column(String(128), nullable=False)
+    id: int = Column(Integer, primary_key=True)
+    name: int = Column(String(128), nullable=False)
+    state_id: int = Column(Integer, ForeignKey('states.id'))
+
+    state = relationship('State', backref='cities')

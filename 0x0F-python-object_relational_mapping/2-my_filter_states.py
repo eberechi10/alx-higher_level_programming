@@ -1,26 +1,40 @@
 #!/usr/bin/python3
-"""
-Module to filter all states where it matches.
-from the database `hbtn_0e_0_usa`.
-"""
 
+"""
+A module that List all states from the database
+hbtn_0e_0_usa where name is the same
+
+"""
+import sys
 import MySQLdb
-from sys import argv
 
-"""
-initialize database, get the states
-"""
+if __name__ == "__main__":
+    """ A module to initialize state class
+    """
+    username: str = sys.argv[1]
+    password: str = sys.argv[2]
+    db_name: str = sys.argv[3]
+    arg: str = sys.argv[4]
+    host: str = "localhost"
+    port: int = 3306
 
-if __name__ == '__main__':
-    db_con = db.connect(host="localhost", port=3306,
-                            user=argv[1], passwd=argv[2], db=argv[3])
-    db_cursor = db_con.cursor()
+    command: str = """
+    SELECT *
+    FROM states
+    WHERE BINARY name = '{}'
+    ORDER BY id
+    """.format(arg)
 
-    db_cursor.execute(
-        "SELECT * FROM states WHERE name LIKE BINARY '{}' ORDER BY \
-                        states.id ASC".format(argv[4]))
+    db = MySQLdb.connect(
+        user=username,
+        host=host,
+        port=port,
+        password=password,
+        database=db_name,
+    )
+    cursor = db.cursor()
 
-    rows_sel = db_cursor.fetchall()
-
-    for row in rows_sel:
+    cursor.execute(command)
+    rows = cursor.fetchall()
+    for row in rows:
         print(row)

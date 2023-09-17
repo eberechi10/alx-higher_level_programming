@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 """
-Module to List all City objects from the database hbtn_0e_101_usa
+A module to list all City objects from the database hbtn_0e_101_usa
 """
 
 import sys
@@ -10,16 +10,27 @@ from sqlalchemy.orm import sessionmaker
 from relationship_state import Base, State
 from relationship_city import City
 
-if __name__ == '__main__':
-    engine = create_engine('mysql+mysqldb://{}:{}@localhost:3306/{}'.
-                           format(sys.argv[1], sys.argv[2], sys.argv[3]),
-                           pool_pre_ping=True)
+if __name__ == "__main__":
+    """ A module to initialize the class cities
 
-    Session = sessionmaker(bind=engine)
+    """
+    username: str = sys.argv[1]
+    password: str = sys.argv[2]
+    db_name: str = sys.argv[3]
+    host: str = "localhost"
+    port: int = 3306
+
+    Session = sessionmaker()
+    engine = create_engine(
+        f"mysql+mysqldb://{username}:{password}@{host}:{port}/{db_name}",
+        pool_pre_ping=True,
+    )
+    Base.metadata.create_all(engine)
+    Session.configure(bind=engine)
     session = Session()
 
-    states = session.query(State).join(City).order_by(City.id).all()
+    if cities := session.query(City).order_by(City.id):
+        for city in cities:
+            print(f"{city.id}: {city.name} -> {city.state.name}")
 
-    for state in states:
-        for city in state.cities:
-            print("{}: {} -> {}".format(city.id, city.name, state.name))
+    session.close()
