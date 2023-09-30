@@ -1,15 +1,14 @@
 #!/usr/bin/python3
-"""script that fetches the status of ' https://alx-intranet.hbtn.io/status'"""
 
-import urllib.request
+"""script to use urlib for make requests
+"""
 
 if __name__ == "__main__":
-    url = 'https://alx-intranet.hbtn.io/status'
-    with urllib.request.urlopen(url) as response:
-        body = response.read()
-
+    import urllib.request as url
+    req = url.Request('https://intranet.hbtn.io/status')
+    with url.urlopen(req) as response:
+        node = response.read()
         print("Body response:")
-        print("\t- type: {}".format(type(body)))
-
-        print("\t- content: {}".format(body))
-        print("\t- utf8 content: {}".format(body.decode('utf-8')))
+        print("\t- type:", type(node))
+        print("\t- content:", node)
+        print("\t- utf8 content:", node.decode('utf-8'))
