@@ -1,4 +1,4 @@
-#!/usr/bin/python3 
+#!/usr/bin/python3
 
 """script to take url and retrieve value of header"""
 
