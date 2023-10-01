@@ -18,7 +18,7 @@ if __name__ == "__main__":
     response = requests.post(URL, data=data)
 
     try:
-       json_ result = response.json()
+       json_result = response.json()
         if json_result.get('id') is None:
             print("No result")
         else:
