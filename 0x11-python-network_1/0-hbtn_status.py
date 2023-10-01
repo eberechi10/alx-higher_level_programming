@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
-"""script to use urlib for make requests
-"""
+"""script to use urlib for make requests"""
+
 
 if __name__ == "__main__":
     import urllib.request as url
