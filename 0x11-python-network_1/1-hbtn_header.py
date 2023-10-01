@@ -1,15 +1,14 @@
-#!/usr/bin/python3
-"""
-script that takes in a URL sends a request to the URL and
-displays the value of the X-Request-Id
-"""
-import urllib.request
+#!/usr/bin/python3 
+
+"""script to take url and retrieve value of header"""
+
+import urllib.request as ur
 import sys
 
+try:
+    reqsult = ur.Request(sys.argv[1])
 
-if __name__ == "__main__":
-    result = urllib.request.Request(sys.argv[1])
-    with urllib.request.urlopen(req) as response:
-        result = response.info()
-
-        print(result.get('X-Request-Id'))
+    with ur.urlopen(reqsult) as response:
+        print(response.getheader('X-Request-Id'))
+except BaseException:
+    pass
